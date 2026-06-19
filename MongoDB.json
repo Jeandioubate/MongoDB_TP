@@ -1,0 +1,63 @@
+## Transformation du diagramme UML en collections MongoDB
+
+
+
+Collection 1 — clients
+
+clients collection
+{
+  "_id": ObjectId("64a1..."),
+  "nom": "Dupont",
+  "prenom": "Alice",
+  "email": "alice@mail.fr",
+  "telephone": "+33612345678",
+  "adresse": {
+    "rue": "12 rue de la Paix", "ville": "Paris", "codePostal": "75001"
+  }
+  
+}
+Collection 2 — comptes (opérations embarquées)
+
+comptes collection
+— opérations embarquées
+{
+  "_id": ObjectId("64b2..."),
+  "numero": "FR76-3000-1007-0001",
+  "type": "courant",
+  "solde": 2450.00,  
+  "clientId": ObjectId("64a1..."),    
+  "operations": [
+
+    // Dépôt
+    {
+      "_id": ObjectId("64c1..."),
+      "type": "depot",
+      "montant": 500.00,
+      "date": ISODate("2024-03-01T10:22:00Z"),
+      "statut": "valide"
+    },
+
+
+    // Retrait
+    {
+      "_id": ObjectId("64c2..."),
+      "type": "retrait",
+      "montant": 80.00,
+      "date": ISODate("2024-03-02T14:05:00Z"),
+      "statut": "valide"
+    },
+
+
+    // Virement
+    {
+      "_id": ObjectId("64c3..."),
+      "type": "virement",
+      "montant": 200.00,
+      "date": ISODate("2024-03-03T09:00:00Z"),
+      "compteSourceId": ObjectId("64b2..."), 
+      "compteDestId":   ObjectId("64b9..."),       
+      "statut": "execute"
+    }
+
+  ]
+}
